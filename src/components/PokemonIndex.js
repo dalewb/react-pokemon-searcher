@@ -1,6 +1,6 @@
 import React from 'react';
 import PokemonCollection from './PokemonCollection';
-// import PokemonForm from './PokemonForm';
+import PokemonForm from './PokemonForm';
 import Loading from './Loading';
 import { Search } from 'semantic-ui-react';
 const URL = 'http://localhost:3000/pokemon';
@@ -19,6 +19,21 @@ class PokemonIndex extends React.Component {
       }))
   }
 
+  addPokemon = (info) => {
+    let newPokemon = {
+      name: info.name,
+      hp: info.hp,
+      sprites: {
+        frontUrl: info.frontUrl,
+        backUrl: info.backUrl
+      }
+    }
+    // debugger
+    this.setState({
+      pokemons: [...this.state.pokemons, newPokemon]
+    },() => {console.log(this.state.pokemons)})
+  }
+
   handleSearch = (e) => {
     console.log(e.target.value)
     this.setState({
@@ -35,7 +50,7 @@ class PokemonIndex extends React.Component {
     let filteredPokemon = this.filterPokemon();
     return (
       <div>
-        {/*<PokemonForm />*/}
+        <PokemonForm addPokemon={this.addPokemon} />
         <br />
         <Search onSearchChange={this.handleSearch} showNoResults={false} />
         <br />
